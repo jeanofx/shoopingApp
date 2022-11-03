@@ -1,6 +1,7 @@
 package com.shooping.ecommerce.service.controller;
 
 import com.shooping.ecommerce.service.entity.DocumentoAlmacenado;
+import com.shooping.ecommerce.service.entity.StorageDocument;
 import com.shooping.ecommerce.service.service.StorageDocumentService;
 import com.shooping.ecommerce.service.utlis.GenericResponse;
 import org.springframework.core.io.Resource;
@@ -10,9 +11,9 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 
 @RestController
-@RequestMapping("api/documento-almacenado")
+@RequestMapping("api/storage-document")
 public class StorageDocumentController {
-    private StorageDocumentService service;
+    public StorageDocumentService service;
 
     public StorageDocumentController(StorageDocumentService service) {
         this.service = service;
@@ -34,7 +35,7 @@ public class StorageDocumentController {
     }
 
     @PostMapping
-    public GenericResponse save(@ModelAttribute DocumentoAlmacenado obj) {
+    public GenericResponse save(@ModelAttribute StorageDocument obj) {
         return service.save(obj);
     }
 

@@ -1,7 +1,8 @@
 package com.shooping.ecommerce.service.service;
 
 import com.shooping.ecommerce.service.entity.DocumentoAlmacenado;
-import com.shooping.ecommerce.service.repository.DocumentoAlmacenadoRepository;
+import com.shooping.ecommerce.service.entity.StorageDocument;
+import com.shooping.ecommerce.service.repository.StorageDocumentRepository;
 import com.shooping.ecommerce.service.utlis.GenericResponse;
 import com.shooping.ecommerce.service.utlis.Global;
 import org.springframework.core.io.Resource;
@@ -19,16 +20,16 @@ import java.util.HashMap;
 @Service
 @Transactional
 public class StorageDocumentService {
-    private DocumentoAlmacenadoRepository repo;
+    private StorageDocumentRepository repo;
     private FileStorageService storageService;
 
-    public StorageDocumentService(DocumentoAlmacenadoRepository repo, FileStorageService storageService) {
+    public StorageDocumentService(StorageDocumentRepository repo, FileStorageService storageService) {
         this.repo = repo;
         this.storageService = storageService;
     }
 
-    public GenericResponse<Iterable<DocumentoAlmacenado>> list() {
-        return new GenericResponse<Iterable<DocumentoAlmacenado>>(Global.TIPO_RESULT, Global.RPTA_OK, Global.OPERACION_CORRECTA, repo.list());
+    public GenericResponse<Iterable<StorageDocument>> list() {
+        return new GenericResponse<Iterable<StorageDocument>>(Global.TIPO_RESULT, Global.RPTA_OK, Global.OPERACION_CORRECTA, repo.list());
     }
 
 
@@ -37,8 +38,8 @@ public class StorageDocumentService {
     }
 
 
-    public  GenericResponse save(DocumentoAlmacenado obj) {
-        String fileName = (repo.findById(obj.getId())).orElse(new DocumentoAlmacenado()).getFileName();
+    public  GenericResponse save(StorageDocument obj) {
+        String fileName = (repo.findById(obj.getId())).orElse(new StorageDocument()).getFileName();
 
         String originalFilename = obj.getFile().getOriginalFilename();
         String extension = originalFilename.substring(originalFilename.lastIndexOf("."));
@@ -72,7 +73,7 @@ public class StorageDocumentService {
     }
 
     public ResponseEntity<Resource> downloadByFileName(String fileName, HttpServletRequest request) {
-        DocumentoAlmacenado doc = repo.findByFileName(fileName).orElse(new DocumentoAlmacenado());
+        StorageDocument doc = repo.findByFileName(fileName).orElse(new StorageDocument());
         return download(doc.getCompleteFileName(), request);
     }
 
@@ -81,7 +82,7 @@ public class StorageDocumentService {
         return null;
     }
 
-    public HashMap<String, Object> validate(DocumentoAlmacenado obj) {
+    public HashMap<String, Object> validate(StorageDocument obj) {
         return null;
     }
 }
